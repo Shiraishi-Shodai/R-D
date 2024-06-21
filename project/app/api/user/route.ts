@@ -34,11 +34,11 @@ export async function POST(req: NextRequest) {
         // });
         // const { password: newUserPassword, ...rest } = newUser;
 
-        return NextResponse.json({"message": "User created succesesfully" },  {status: 200});
+        return NextResponse.json({"serverMessage": "User created succesesfully" },  {status: 200});
         
     } catch(error: unknown) {
         if(error instanceof Error) {
-            return NextResponse.json({"message": error.message }, { status: 500 });
+            return NextResponse.json({"serverMessage": error.message }, { status: 500 });
         }
     }
 }

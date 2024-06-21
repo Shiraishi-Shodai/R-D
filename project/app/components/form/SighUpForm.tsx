@@ -18,7 +18,7 @@ const SignUpForm : React.FC= () => {
     resolver: zodResolver(signUpSchema),
   });
 
-  const [errorMessage, setErrorMessage] : [string, Dispatch<SetStateAction<string>>] = useState<string>("")
+  const [serverMessage, setServerMessage] : [string, Dispatch<SetStateAction<string>>] = useState<string>("")
 
   const onSubmit: SubmitHandler<signUpType> = async (data: signUpType) => {
 
@@ -35,19 +35,17 @@ const SignUpForm : React.FC= () => {
           try{
 
             const res = await fetch('http://localhost:3000/api/user/', requestOption)
-            const {message} = await res.json();
+            const {serverMessage} = await res.json();
 
             // res.ok: このレスポンスが（ステータスが 200-299 で）成功したかどうかを表す論理値
             if(!res.ok) {
               // emailまたはusernameがすでに登録されていた場合
               console.log("レスポンスに問題あり");
-              console.log(typeof message)
-              console.log(message); // サーバーから送られたエラーメッセージを表示
-              setErrorMessage(message)
+              setServerMessage(serverMessage) // サーバーから送られたエラーメッセージをセット
             } else {
               // 正常にデータベースにデータが登録されたとき
               console.log("正常に完了")
-              console.log(message); // リダイレクト
+              console.log(serverMessage); // リダイレクト
             }
           
         }catch(error) {
@@ -80,7 +78,7 @@ const SignUpForm : React.FC= () => {
             {errors.confirmPassword && <p style={{color: "red"}}>{errors.confirmPassword.message}</p>}
           </div>
         </div>
-        <p style={{color: "red"}}>{errorMessage}</p>
+        <p style={{color: "red"}}>{serverMessage}</p>
         <Button className='w-full mt-6' type='submit'>
           Sign up
         </Button>
