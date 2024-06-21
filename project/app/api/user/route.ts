@@ -29,10 +29,9 @@ export async function POST(req: NextRequest) {
         const hashedPassword = await hash(password, 10)
         const user : UserType = {email, password: hashedPassword, username};
         
-        // const newUser = await db.user.create({
-        //     data: user
-        // });
-        // const { password: newUserPassword, ...rest } = newUser;
+        const newUser = await db.user.create({
+            data: user
+        });
 
         return NextResponse.json({"serverMessage": "User created succesesfully" },  {status: 200});
         
