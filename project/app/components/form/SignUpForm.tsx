@@ -7,15 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpType, UserType } from "../../../types/types";
 import { signUpSchema } from "@/lib/zodSchema";
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { cookies } from "next/headers";
 
 const SignUpForm: React.FC = () => {
   /* APIエンドポイント */
   const create_user_URL = "http://localhost:3000/api/signIn/create_user"; // formデータ送信時にユーザー作成
-  const is_already_URL = "http://localhost:3000/api/signIn/is_already"; // ユーザー名かメールアドレスがすでに存在するかチェック
+  const is_already_URL = "http://localhost:3000/api/signIn/is_already"; // メールアドレスがすでに存在するかチェック
 
   // fetch関数でPOST送信する際のオプションを取得する
-  const getRequestOption = (bodyData: { [key: string]: string } | UserType) => {
+  const getRequestOption = (bodyData: string | UserType) => {
     // fetchリクエストのオプションを指定
     const requestOption = {
       method: "POST",
@@ -38,46 +37,48 @@ const SignUpForm: React.FC = () => {
   });
 
   // 重複したデータがすでに存在するかサーバーに問い合わせる対象のデータを監視する
-  const watchFields = useWatch({
+  const watchField = useWatch({
     control,
-    name: ["username", "email"],
+    name: ["email"],
     defaultValue: {
-      username: "",
       email: "",
     },
   });
-  // watchFieldsで監視しているデータの内、どちらが変更されたかを判断するために一つ前のwatchFieldsの値を一時的に保持する
-  let watchSaveData = useRef({ username: "", email: "" });
 
-  // ユーザー名かemailが変更される度にサーバーに変更された値を送信して、すでに登録されているデータかチェックする
+  // watchFieldsで監視しているデータの内、どちらが変更されたかを判断するために一つ前のwatchFieldsの値を一時的に保持する
+  const watchSaveData = useRef("");
+  // 現在入力しているメールアドレスが登録済みか
+  const [alreadyEmailFlag, setAlreadyEmailFlag] = useState(false);
+
+  // emailが変更される度にサーバーに変更された値を送信して、すでに登録されているデータかチェックする
   // useEffectはレンダー(変更されたDOMの計算)の結果がブラウザに描画された後に動作する
   useEffect(() => {
-    const checkData: { [key: string]: string } = { property: "", data: "" }; // 登録済みかチェックしたいプロパティとそのデータを格納
+    let checkData: string = ""; // 登録済みかチェックしたいプロパティとそのデータを格納
 
     // どちらの値が変更されたか判断する
-    if (watchSaveData.current.username !== watchFields[0]) {
-      watchSaveData.current.username = watchFields[0]; // useRefで管理しているデータを更新
-      checkData.property = "username"; // サーバー側で存在の有無を確認するプロパティを設定
-      checkData.data = watchSaveData.current.username; // サーバー側で存在の有無を確認するデータを設定
-    } else {
-      watchSaveData.current.email = watchFields[1];
-      checkData.property = "email";
-      checkData.data = watchSaveData.current.email;
-    }
+    watchSaveData.current = watchField[0]; // useRefで管理しているデータを更新
+    checkData = watchSaveData.current; // サーバー側で存在の有無を確認するデータを設定
 
-    // 変更されたユーザー名またはメールアドレスを送信しすでに存在するか確認
-    const isAlread = async (checkData: { [key: string]: string }) => {
+    // 変更されたメールアドレスを送信しすでに存在するか確認
+    const isAlready = async (checkData: string) => {
       const res: Response = await fetch(
         is_already_URL,
         getRequestOption(checkData)
       );
 
-      const data: string = await res.json();
-      console.log(data);
+      const { alreadyFlag } = await res.json();
+      return alreadyFlag;
     };
 
-    isAlread(checkData);
-  }, [watchFields]);
+    // 非同期関数を実行するための関数
+    const getRes = async () => {
+      const alreadyFlag = await isAlready(checkData);
+      setAlreadyEmailFlag(alreadyFlag);
+    };
+
+    getRes();
+    console.log(alreadyEmailFlag);
+  }, [watchField]);
 
   const [serverMessage, setServerMessage]: [
     string,
@@ -140,7 +141,13 @@ const SignUpForm: React.FC = () => {
           )}
         </div>
       </div>
-      <p style={{ color: "red" }}>{serverMessage}</p>
+
+      {alreadyEmailFlag && (
+        <p style={{ color: "red" }}>
+          このメールアドレスはすでに登録されています
+        </p>
+      )}
+
       <Button className="w-full mt-6" type="submit">
         Sign up
       </Button>

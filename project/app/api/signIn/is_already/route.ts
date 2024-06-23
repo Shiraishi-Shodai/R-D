@@ -3,20 +3,20 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { property, data } = await req.json(); // 使用済みかチェックしたいデータを取得(ユーザー名かメールアドレスのデータ)
+    const checkData = await req.json(); // 使用済みかチェックしたいデータを取得(ユーザー名かメールアドレスのデータ)
+    let alreadyFlag = false; //登録済みのメールアドレスであればtrue, そうでなければfalseを保持
 
-    if (typeof property === "string") {
-      //emailもしくはusernameが重なってないかチェック
-      const existingUserByEmail = await db.user.findUnique({
-        where: { email: data },
-      });
+    console.log(checkData);
+    //emailもしくはusernameが重なってないかチェック
+    const existingUserByEmail = await db.user.findUnique({
+      where: { email: checkData },
+    });
+
+    if (!!existingUserByEmail) {
+      alreadyFlag = true;
     }
 
-    // if (existingUserByEmail) {
-    //   throw Error("このメールアドレスは使われています。");
-    // }
-
-    return NextResponse.json({ checked: true });
+    return NextResponse.json({ alreadyFlag: alreadyFlag });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json(
