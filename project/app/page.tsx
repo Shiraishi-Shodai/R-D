@@ -1,11 +1,11 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import SignUpForm from "./components/form/SignUpForm";
- 
+import SignUpPage from "./signUp/page";
+
 export default function Home() {
   return (
     <main className={styles.main}>
-      <SignUpForm/>
+      <SignUpPage />
     </main>
   );
 }
