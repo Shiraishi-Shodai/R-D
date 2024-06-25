@@ -3,13 +3,18 @@
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { UserType, signUpType } from "../../types";
-import { signUpSchema } from "../../lib/zodSchema";
 import { Button } from "@/app/components/elements/button";
-import { getAlreadyEmails, isAlready, createUser } from "../../utils";
 import { useRouter } from "next/navigation";
+import FormField from "@/feature/components/authField/AuthField";
+import { UserType, signUpType } from "@/feature/signUp/types";
+import { signUpSchema } from "@/feature/signUp/lib/zodSchema";
+import {
+  createUser,
+  getAlreadyEmails,
+  isAlready,
+} from "@/feature/signUp/utils";
 
-const SignUpForm: React.FC = () => {
+const SignInForm: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意
   const router = useRouter();
   // formデータのバリデーションチェック準備
@@ -68,38 +73,25 @@ const SignUpForm: React.FC = () => {
       });
   };
 
+  // FormFieldコンポーネントをマップで回すためにオブジェクトを用意
+  const fieldObj: signUpType = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="space-y-2">
-        <div>
-          <label htmlFor="username">Username</label>
-          <input {...register("username")} />
-          {errors.username && (
-            <p style={{ color: "red" }}>{errors.username.message}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input {...register("email")} />
-          {errors.email && (
-            <p style={{ color: "red" }}>{errors.email.message}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input {...register("password")} />
-          {errors.password && (
-            <p style={{ color: "red" }}>{errors.password.message}</p>
-          )}
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Re-Enter your password</label>
-          <input {...register("confirmPassword")} />
-          <br></br>
-          {errors.confirmPassword && (
-            <p style={{ color: "red" }}>{errors.confirmPassword.message}</p>
-          )}
-        </div>
+        {Object.keys(fieldObj).map((value, key) => (
+          <FormField
+            key={key}
+            name={value}
+            register={register}
+            errors={errors}
+          />
+        ))}
       </div>
 
       {alreadyEmailFlag && (
@@ -121,4 +113,4 @@ const SignUpForm: React.FC = () => {
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

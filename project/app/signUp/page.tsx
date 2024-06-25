@@ -1,4 +1,4 @@
-import SignUpForm from "@/feature/signUp/components/signUpForm/signUpForm";
+import SignUpForm from "@/feature/signUp/components/signUpForm/SignUpForm";
 import React from "react";
 
 function SignUpPage() {
