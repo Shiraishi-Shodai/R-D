@@ -6,13 +6,10 @@ import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
 import FormField from "@/feature/components/authField/AuthField";
-import { UserType, signUpType } from "@/feature/signUp/types";
 import { signUpSchema } from "@/feature/signUp/lib/zodSchema";
-import {
-  createUser,
-  getAlreadyEmails,
-  isAlready,
-} from "@/feature/signUp/utils";
+import { getAlreadyEmails, isAlready } from "@/feature/signUp/utils";
+import { UserType, signUpType } from "@/types";
+import { SIGN_UP_API_URL } from "@/feature/signUp/constants";
 
 const SignInForm: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意
@@ -64,7 +61,7 @@ const SignInForm: React.FC = () => {
     const { email, password, username } = data;
     const user: UserType = { email, password, username };
 
-    createUser(user)
+    fetch(SIGN_UP_API_URL, {})
       .then((res) => {
         router.push("/signIn"); // リダイレクト
       })

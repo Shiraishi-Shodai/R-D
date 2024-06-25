@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcrypt";
-import { UserType } from "@/feature/signUp/types";
+import { UserType } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {

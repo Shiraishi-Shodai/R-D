@@ -17,6 +17,10 @@ export const baseSchema = z.object({
   confirmPassword: z
     .string()
     .min(1, { message: "確認用のパスワードを入力してください" }),
+  securityCode: z
+    .number({ message: "6桁のセキュリティコードを入力してください" })
+    .gte(6)
+    .lte(6),
 });
 
 // サインアップ画面のフォーム入力の際に使用するバリデーションチェックのルールを定義
@@ -42,10 +46,15 @@ export const signInSchema = baseSchema.pick({
   password: true,
 });
 
-export const passReset3Schema = baseSchema
+export const passReset1Schema = baseSchema.pick({
+  email: true,
+});
+
+export const passReset2Schema = baseSchema
   .pick({
     password: true,
     confirmPassword: true,
+    securityCode: true,
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {

@@ -3,12 +3,13 @@
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
-import { UserType, signUpType } from "../../types";
+import { UserType, signUpType } from "../../../../types";
 import { signUpSchema } from "../../lib/zodSchema";
 import { Button } from "@/app/components/elements/button";
-import { getAlreadyEmails, isAlready, createUser } from "../../utils";
+import { getAlreadyEmails, isAlready } from "../../utils";
 import { useRouter } from "next/navigation";
 import FormField from "@/feature/components/authField/AuthField";
+import { SIGN_UP_API_URL } from "../../constants";
 
 const SignUpForm: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意
@@ -56,11 +57,16 @@ const SignUpForm: React.FC = () => {
     setAlreadyEmailFlag(result);
   }, [watchEmail]);
 
+  // フォームのデータを受取ユーザーを作成
   const onSubmit: SubmitHandler<signUpType> = async (data: signUpType) => {
     const { email, password, username } = data;
     const user: UserType = { email, password, username };
 
-    createUser(user)
+    await fetch(SIGN_UP_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    })
       .then((res) => {
         router.push("/signIn"); // リダイレクト
       })
