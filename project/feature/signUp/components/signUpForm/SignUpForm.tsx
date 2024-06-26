@@ -4,12 +4,11 @@ import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { UserType, signUpType } from "../../../../types";
-import { signUpSchema } from "../../lib/zodSchema";
+import { signUpSchema } from "../../../../lib/zodSchema";
 import { Button } from "@/app/components/elements/button";
 import { getAlreadyEmails, isAlready } from "../../utils";
 import { useRouter } from "next/navigation";
-import FormField from "@/feature/components/authField/AuthField";
-import { SIGN_UP_API_URL } from "../../constants";
+import FormField from "@/app/components/elements/AuthField";
 
 const SignUpForm: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意
@@ -62,7 +61,7 @@ const SignUpForm: React.FC = () => {
     const { email, password, username } = data;
     const user: UserType = { email, password, username };
 
-    await fetch(SIGN_UP_API_URL, {
+    await fetch("/api/signUp", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),

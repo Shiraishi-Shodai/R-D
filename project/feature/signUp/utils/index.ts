@@ -1,10 +1,8 @@
-import { SIGN_UP_API_URL } from "../constants";
-
 // Feature: 既存のメールアドレスリストを返す
 // Execution Timing: useEffect内でSignUpFormコンポーネントが最初にレンダリングされる際に1度だけ実行
 // Returns: alreadyEmails : string[]
 export const getAlreadyEmails = async () => {
-  const response: Response = await fetch(SIGN_UP_API_URL);
+  const response: Response = await fetch("/api/signUp");
   const { alreadyEmails } = await response.json();
   return alreadyEmails;
 };

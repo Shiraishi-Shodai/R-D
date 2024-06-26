@@ -4,7 +4,7 @@ import {
   passReset2Schema,
   signInSchema,
   signUpSchema,
-} from "../feature/signUp/lib/zodSchema";
+} from "../lib/zodSchema";
 
 // サインアップ時にデータベースに新規登録するデータの型を定義
 export type UserType = {

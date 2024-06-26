@@ -4,10 +4,10 @@ import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
-import FormField from "@/feature/components/authField/AuthField";
 import { passReset1Type } from "@/types";
-import { passReset1Schema } from "@/feature/signUp/lib/zodSchema";
+import { passReset1Schema } from "@/lib/zodSchema";
 import { PASS_RESET1_API_URL } from "../../constants";
+import FormField from "@/app/components/elements/AuthField";
 
 const SignUpForm: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意

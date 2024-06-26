@@ -6,7 +6,7 @@ import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
 import FormField from "@/feature/components/authField/AuthField";
-import { signUpSchema } from "@/feature/signUp/lib/zodSchema";
+import { signUpSchema } from "@/lib/zodSchema";
 import { getAlreadyEmails, isAlready } from "@/feature/signUp/utils";
 import { UserType, signUpType } from "@/types";
 import { SIGN_UP_API_URL } from "@/feature/signUp/constants";
