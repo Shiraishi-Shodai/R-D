@@ -4,8 +4,8 @@ import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
-import { passReset1Type } from "@/types";
-import { passReset1Schema } from "@/lib/zodSchema";
+import { passReset2Type } from "@/types";
+import { passReset2Schema } from "@/lib/zodSchema";
 import FormField from "@/app/components/elements/AuthField";
 
 const PassResetForm1: React.FC = () => {
@@ -17,27 +17,25 @@ const PassResetForm1: React.FC = () => {
     handleSubmit,
     formState: { errors }, // バリデーションチェックに失敗したときに表示するエラーオブジェクト
     control,
-  } = useForm<passReset1Type>({
-    resolver: zodResolver(passReset1Schema),
+  } = useForm<passReset2Type>({
+    resolver: zodResolver(passReset2Schema),
     mode: "onChange", // signUpTypeのプロパティが変更される度にバリデーションチェックを行う
   });
 
   // 重複したデータがすでに存在するかサーバーに問い合わせる対象のデータを監視する
   const watchEmail = useWatch({
     control,
-    name: "email",
+    name: ["password", "confirmPassword"],
   });
 
   // 入力されたメアド宛にセキュリティコードを送る
-  const onSubmit: SubmitHandler<passReset1Type> = async (
-    data: passReset1Type
+  const onSubmit: SubmitHandler<passReset2Type> = async (
+    data: passReset2Type
   ) => {
-    const { email } = data;
-    const postData = { email: email };
     await fetch("/api/passReset1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -48,7 +46,11 @@ const PassResetForm1: React.FC = () => {
   };
 
   // FormFieldコンポーネントをマップで回すためにオブジェクトを用意
-  const fieldObj: passReset1Type = { email: "" };
+  const fieldObj: passReset2Type = {
+    password: "",
+    confirmPassword: "",
+    securityCode: 0,
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
