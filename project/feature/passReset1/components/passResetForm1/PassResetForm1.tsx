@@ -6,7 +6,6 @@ import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
 import { passReset1Type } from "@/types";
 import { passReset1Schema } from "@/lib/zodSchema";
-import { PASS_RESET1_API_URL } from "../../constants";
 import FormField from "@/app/components/elements/AuthField";
 
 const SignUpForm: React.FC = () => {
@@ -35,7 +34,7 @@ const SignUpForm: React.FC = () => {
   ) => {
     const { email } = data;
     const postData = { email: email };
-    await fetch(PASS_RESET1_API_URL, {
+    await fetch("/api/passReset1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(postData),
