@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   passReset1Schema,
   passReset2Schema,
+  passReset3Schema,
   signInSchema,
   signUpSchema,
 } from "../lib/zodSchema";
@@ -18,3 +19,4 @@ export type signUpType = z.infer<typeof signUpSchema>;
 export type signInType = z.infer<typeof signInSchema>;
 export type passReset1Type = z.infer<typeof passReset1Schema>;
 export type passReset2Type = z.infer<typeof passReset2Schema>;
+export type passReset3Type = z.infer<typeof passReset3Schema>;

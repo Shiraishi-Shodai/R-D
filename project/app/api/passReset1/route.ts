@@ -1,5 +1,7 @@
+import { getSession } from "@/feature/passReset1/lib/session";
 import { SendEmailDto } from "@/feature/passReset1/types";
 import {
+  getSecurityCode,
   getSendEmailDto,
   sendEmail,
 } from "@/feature/passReset1/utils/nodeMailer";
@@ -10,9 +12,13 @@ export async function POST(req: NextRequest) {
   const { email } = await body;
 
   try {
-    const sendDtoObj: SendEmailDto = getSendEmailDto(email);
-    const result = await sendEmail(sendDtoObj);
-    return NextResponse.json({ message: "送信完了" });
+    const securityCode: string = getSecurityCode();
+    const sendDtoObj: SendEmailDto = getSendEmailDto(email, securityCode);
+    await sendEmail(sendDtoObj);
+    const session = await getSession();
+    session.securityCode = securityCode;
+    await session.save();
+    return NextResponse.json({ message: "処理が完了しました" });
   } catch (error) {
     return NextResponse.json(
       { message: "送信エラーが発生しました" },

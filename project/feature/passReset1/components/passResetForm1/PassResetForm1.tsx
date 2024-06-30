@@ -41,8 +41,7 @@ const PassResetForm1: React.FC = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.message);
-        // router.push("/signIn"); // パスワード再設定画面へリダイレクト
+        router.push("/passReset2"); // パスワード再設定画面へリダイレクト
       })
       .catch((error) => console.log(error.message));
   };

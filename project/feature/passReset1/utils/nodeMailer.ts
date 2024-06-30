@@ -23,15 +23,15 @@ export const sendEmail = async (dto: SendEmailDto) => {
   });
 };
 
-// 6桁の乱数生成
-const getRandomInt = () => {
+// 6桁の乱数生成し文字列として返す
+export const getSecurityCode = () => {
   const MAX: number = 1000000;
   const MIN: number = 100000;
   const randomInt: number = Math.floor(Math.random() * (MAX - MIN)) + MIN;
   return randomInt.toString();
 };
 
-export const getSendEmailDto = (email: string) => {
+export const getSendEmailDto = (email: string, securityCode: string) => {
   const sender = {
     name: "My App",
     address: "siranosuke1227@gmail.com",
@@ -47,7 +47,7 @@ export const getSendEmailDto = (email: string) => {
     sender,
     recipients,
     subject: "Welcome!",
-    message: getRandomInt(),
+    message: securityCode,
   };
 
   return sendDtoObj;

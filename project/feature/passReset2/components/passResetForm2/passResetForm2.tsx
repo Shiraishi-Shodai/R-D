@@ -3,13 +3,12 @@
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/app/components/elements/button";
-import { useRouter } from "next/navigation";
 import { passReset2Type } from "@/types";
 import { passReset2Schema } from "@/lib/zodSchema";
 import FormField from "@/app/components/elements/AuthField";
+import { useRouter } from "next/navigation";
 
-const PassResetForm1: React.FC = () => {
-  // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意
+const PassResetForm2: React.FC = () => {
   const router = useRouter();
   // formデータのバリデーションチェック準備
   const {
@@ -22,34 +21,24 @@ const PassResetForm1: React.FC = () => {
     mode: "onChange", // signUpTypeのプロパティが変更される度にバリデーションチェックを行う
   });
 
-  // 重複したデータがすでに存在するかサーバーに問い合わせる対象のデータを監視する
-  const watchEmail = useWatch({
-    control,
-    name: ["password", "confirmPassword"],
-  });
-
-  // 入力されたメアド宛にセキュリティコードを送る
   const onSubmit: SubmitHandler<passReset2Type> = async (
     data: passReset2Type
   ) => {
-    await fetch("/api/passReset1", {
+    await fetch("/api/passReset2", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.message);
-        // router.push("/signIn"); // パスワード再設定画面へリダイレクト
+        // router.push("/passReset3"); // パスワード再設定画面へリダイレクト
       })
       .catch((error) => console.log(error.message));
   };
 
   // FormFieldコンポーネントをマップで回すためにオブジェクトを用意
   const fieldObj: passReset2Type = {
-    password: "",
-    confirmPassword: "",
-    securityCode: 0,
+    securityCode: "0",
   };
 
   return (
@@ -65,11 +54,9 @@ const PassResetForm1: React.FC = () => {
         ))}
       </div>
 
-      <Button className="w-full mt-6" type="submit">
-        Sign up
-      </Button>
+      <Button type="submit">Send Security Code</Button>
     </form>
   );
 };
 
-export default PassResetForm1;
+export default PassResetForm2;
