@@ -5,7 +5,7 @@ import {
   passReset3Schema,
   signInSchema,
   signUpSchema,
-} from "../lib/zodSchema";
+} from "@/schema/index";
 
 // サインアップ時にデータベースに新規登録するデータの型を定義
 export type UserType = {
@@ -20,3 +20,7 @@ export type signInType = z.infer<typeof signInSchema>;
 export type passReset1Type = z.infer<typeof passReset1Schema>;
 export type passReset2Type = z.infer<typeof passReset2Schema>;
 export type passReset3Type = z.infer<typeof passReset3Schema>;
+
+export type AuthFieldType = {
+  [key: string]: { placeholder: string; inputType: string };
+};

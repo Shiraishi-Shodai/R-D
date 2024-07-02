@@ -5,13 +5,28 @@ interface FormFieldProps {
   name: string;
   register: any;
   errors: any;
+  isPending: boolean;
+  placeholder: string;
+  type: string;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ name, register, errors }) => {
+const FormField: React.FC<FormFieldProps> = ({
+  name,
+  register,
+  errors,
+  isPending,
+  placeholder,
+  type,
+}) => {
   return (
     <div>
       <label htmlFor={name}>{name}</label>
-      <input {...register(name)} />
+      <input
+        {...register(name)}
+        disabled={isPending}
+        placeholder={placeholder}
+        type={type}
+      />
       <p style={{ color: "red" }}>
         <ErrorMessage errors={errors} name={name} />
       </p>

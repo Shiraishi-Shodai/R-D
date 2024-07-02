@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // サインアップ画面のフォーム入力の際に使用するバリデーションチェックのルールを定義
 export const baseSchema = z.object({
-  username: z
+  name: z
     .string({ message: "ユーザー名を入力してください" })
     .min(1, { message: "1文字以上のユーザー名を入力してください" })
     .max(20, { message: "20文字以下のユーザー名を入力してください" }),
@@ -26,7 +26,7 @@ export const baseSchema = z.object({
 // サインアップ画面のフォーム入力の際に使用するバリデーションチェックのルールを定義
 export const signUpSchema = baseSchema
   .pick({
-    username: true,
+    name: true,
     email: true,
     password: true,
     confirmPassword: true,
