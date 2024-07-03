@@ -1,7 +1,7 @@
 import SignInForm from "@/feature/signIn/components/signInForm/SignInForm";
 import React from "react";
 
-function signIn() {
+function SignIn() {
   return (
     <div>
       <SignInForm />
@@ -9,4 +9,4 @@ function signIn() {
   );
 }
 
-export default signIn;
+export default SignIn;

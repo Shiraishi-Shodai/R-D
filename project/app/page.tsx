@@ -3,5 +3,5 @@ import styles from "./page.module.css";
 import SignUpPage from "./auth/signUp/page";
 
 export default function Home() {
-  return <main className={styles.main}></main>;
+  return <main className={styles.main}>Hello</main>;
 }

@@ -15,8 +15,8 @@ export const login = async (values: signInType) => {
   const { email, password }: signInType = validationFields.data!;
   const existingUser = await getUserByEmail(email);
 
-  if (!existingUser) {
-    return { error: "Emailに対応する存在しません" };
+  if (!existingUser || !existingUser.password) {
+    return { error: "メールアドレスまたはパスワードが違います" };
   }
 
   try {

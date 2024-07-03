@@ -25,14 +25,11 @@ export default {
           return null;
         }
 
-        const passwordMatch = bcrypt.compare(password, user.password!);
+        const passwordMatch = await bcrypt.compare(password, user.password!);
         // パスワードが一致していればユーザーを返す
-        if (!!passwordMatch) return user;
-
+        if (passwordMatch) return user;
         return null;
       },
     }),
   ],
 } satisfies NextAuthConfig;
-
-// const isMatch = await bcrypt.compare(existingUser.password!, password);

@@ -46,34 +46,34 @@ const SignInForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <div className="space-y-2">
-        {Object.keys(fieldObj).map((value, key) => (
-          <FormField
-            key={key}
-            name={value}
-            register={register}
-            errors={errors}
-            isPending={isPending}
-            placeholder={fieldObj[value].placeholder}
-            type={fieldObj[value].inputType}
-          />
-        ))}
-      </div>
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+        <div className="space-y-2">
+          {Object.keys(fieldObj).map((value, key) => (
+            <FormField
+              key={key}
+              name={value}
+              register={register}
+              errors={errors}
+              isPending={isPending}
+              placeholder={fieldObj[value].placeholder}
+              type={fieldObj[value].inputType}
+            />
+          ))}
+        </div>
 
-      <FormError message={error} />
-      <FormSuccess message={success} />
-      <Button className="w-full mt-6" type="submit" disabled={isPending}>
-        Sign up
-      </Button>
-
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Button className="w-full mt-6" type="submit" disabled={isPending}>
+          Sign up
+        </Button>
+      </form>
       <Social />
-
       <BackButton
         href="/auth/signUp"
         message="まだアカウントをお持ちでない方はこちら"
       />
-    </form>
+    </div>
   );
 };
 

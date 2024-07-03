@@ -33,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return session;
     },
 
-    // 認証が必要なリクエストごとに呼び出される
+    //JWT トークンが作成または更新されるときに実行される
     async jwt({ token }) {
       // トークンの識別子が存在していなければtokenをそのまま返す
       if (!token.sub) return token;
