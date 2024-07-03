@@ -5,3 +5,4 @@ const pageproduct = () =>{
 };
 
 export default pageproduct;
+
