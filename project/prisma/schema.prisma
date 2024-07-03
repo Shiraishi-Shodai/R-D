@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,11 +7,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  password  String
-  username String @db.VarChar(20)
+model clothes_category {
+  clothes_category_id   Int                 @id
+  clothes_category_name String              @db.VarChar(51)
+  productattributes     productattributes[]
+}
 
-  @@map("user")
+model productattributes {
+  product_attribute_id Int              @id(map: "product_attributes_pkey")
+  product_id           Int
+  clothes_category_id  Int
+  clothes_category     clothes_category @relation(fields: [clothes_category_id], references: [clothes_category_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_clothes_category")
+  products             products         @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product_id")
+}
+
+model products {
+  product_id           Int                 @id
+  product_image        Bytes
+  product_name         String              @db.VarChar(51)
+  product_price        Int
+  product_attribute_id Int
+  productattributes    productattributes[]
 }
