@@ -3,15 +3,15 @@
 import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
-import { AuthFieldType, signUpType } from "../../../../types";
+import { AuthFieldType, signUpType } from "../../../../types/auth";
 import { Button } from "@/app/components/elements/button";
-import FormField from "@/app/components/elements/AuthField";
+import FormField from "@/app/components/elements/auth/AuthField";
 import { signUpSchema } from "@/schema";
 import { signUp } from "@/actions/signUp";
-import FormError from "@/app/components/elements/FormError";
-import FormSuccess from "@/app/components/elements/FormSuccess";
-import BackButton from "@/app/components/elements/BackButton";
-import Social from "@/app/components/elements/Social";
+import FormError from "@/app/components/elements/auth/FormError";
+import FormSuccess from "@/app/components/elements/auth/FormSuccess";
+import BackButton from "@/app/components/elements/auth/BackButton";
+import Social from "@/app/components/elements/auth/Social";
 
 const SignUpForm: React.FC = () => {
   const [error, setError] = useState<string | undefined>();

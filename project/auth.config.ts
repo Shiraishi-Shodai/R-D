@@ -3,9 +3,9 @@ import GitHub from "next-auth/providers/github";
 import type { NextAuthConfig } from "next-auth";
 import google from "next-auth/providers/google";
 import credentials from "next-auth/providers/credentials";
-import { signInSchema } from "./schema";
+import { loginSchema } from "./schema";
 import { getUserByEmail } from "./data/user";
-import { signInType } from "./types";
+import { loginType } from "./types/auth";
 
 export default {
   providers: [
@@ -15,10 +15,10 @@ export default {
     }),
     credentials({
       async authorize(credentials) {
-        const validationFields = signInSchema.safeParse(credentials);
+        const validationFields = loginSchema.safeParse(credentials);
         if (!validationFields) return null;
 
-        const { email, password }: signInType = validationFields.data!;
+        const { email, password }: loginType = validationFields.data!;
         const user = await getUserByEmail(email);
 
         if (!user || !password) {

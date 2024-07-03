@@ -29,7 +29,7 @@ export default auth(async function middleware(req) {
 
   // ログインしていない状態で、パブリックじゃないページにアクセスした時
   if (!isLoggedIn && !isPublicRouter) {
-    return Response.redirect(new URL("/auth/signIn", nextUrl));
+    return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
   return null;

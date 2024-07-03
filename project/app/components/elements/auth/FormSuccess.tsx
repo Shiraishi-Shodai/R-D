@@ -11,7 +11,7 @@ const FormSuccess: React.FC<FormSuccessProps> = ({ message }) => {
   return (
     <div>
       <CheckCircledIcon />
-      <p>{message}</p>
+      <p style={{ color: "green" }}>{message}</p>
     </div>
   );
 };

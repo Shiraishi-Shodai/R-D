@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/app/components/elements/button";
 import { passReset2Type } from "@/types";
 import { passReset2Schema } from "@/lib/zodSchema";
-import FormField from "@/app/components/elements/AuthField";
+import FormField from "@/app/components/elements/auth/AuthField";
 import { useRouter } from "next/navigation";
 
 const PassResetForm2: React.FC = () => {

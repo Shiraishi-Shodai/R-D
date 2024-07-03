@@ -1,18 +1,18 @@
 "use server";
 import { getUserByEmail } from "@/data/user";
-import { signInSchema } from "@/schema";
-import { signInType } from "@/types";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { loginType } from "@/types/auth";
+import { loginSchema } from "@/schema";
 
-export const login = async (values: signInType) => {
-  const validationFields = signInSchema.safeParse(values);
+export const login = async (values: loginType) => {
+  const validationFields = loginSchema.safeParse(values);
   if (!validationFields) {
     return { error: "データが存在しません" };
   }
 
-  const { email, password }: signInType = validationFields.data!;
+  const { email, password }: loginType = validationFields.data!;
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.password) {

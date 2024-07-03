@@ -11,7 +11,7 @@ const FormError: React.FC<FormErrorProps> = ({ message }) => {
   return (
     <div>
       <ExclamationTriangleIcon />
-      <p>{message}</p>
+      <p style={{ color: "red" }}>{message}</p>
     </div>
   );
 };

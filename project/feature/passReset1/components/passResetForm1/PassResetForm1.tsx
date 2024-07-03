@@ -6,7 +6,7 @@ import { Button } from "@/app/components/elements/button";
 import { useRouter } from "next/navigation";
 import { passReset1Type } from "@/types";
 import { passReset1Schema } from "@/lib/zodSchema";
-import FormField from "@/app/components/elements/AuthField";
+import FormField from "@/app/components/elements/auth/AuthField";
 
 const PassResetForm1: React.FC = () => {
   // アカウント作成成功時にサインイン画面にリダイレクトするためのルーターを用意

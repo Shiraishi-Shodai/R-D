@@ -41,7 +41,7 @@ export const signUpSchema = baseSchema
     }
   });
 
-export const signInSchema = baseSchema.pick({
+export const loginSchema = baseSchema.pick({
   email: true,
   password: true,
 });

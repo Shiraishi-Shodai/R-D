@@ -1,19 +1,19 @@
 "use client";
 
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
-import { AuthFieldType, signInType } from "../../../../types";
+import { AuthFieldType, loginType } from "../../../../types/auth";
+import { loginSchema } from "@/schema/index";
+import FormField from "@/app/components/elements/auth/AuthField";
+import FormError from "@/app/components/elements/auth/FormError";
+import FormSuccess from "@/app/components/elements/auth/FormSuccess";
 import { Button } from "@/app/components/elements/button";
-import FormField from "@/app/components/elements/AuthField";
-import { signInSchema } from "@/schema";
+import Social from "@/app/components/elements/auth/Social";
+import BackButton from "@/app/components/elements/auth/BackButton";
 import { login } from "@/actions/login";
-import FormError from "@/app/components/elements/FormError";
-import FormSuccess from "@/app/components/elements/FormSuccess";
-import BackButton from "@/app/components/elements/BackButton";
-import Social from "@/app/components/elements/Social";
 
-const SignInForm: React.FC = () => {
+const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
@@ -23,12 +23,12 @@ const SignInForm: React.FC = () => {
     handleSubmit,
     formState: { errors }, // バリデーションチェックに失敗したときに表示するエラーオブジェクト
     control,
-  } = useForm<signInType>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<loginType>({
+    resolver: zodResolver(loginSchema),
   });
 
   // フォームのデータを受取ユーザーを作成
-  const onSubmit: SubmitHandler<signInType> = async (values: signInType) => {
+  const onSubmit: SubmitHandler<loginType> = async (values: loginType) => {
     setError("");
     setSuccess("");
     startTransition(() => {
@@ -77,4 +77,4 @@ const SignInForm: React.FC = () => {
   );
 };
 
-export default SignInForm;
+export default LoginForm;

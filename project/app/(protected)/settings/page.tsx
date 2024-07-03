@@ -1,6 +1,7 @@
 import { auth, signOut } from "@/auth";
 import React from "react";
 
+// 認証のテスト用ページ
 async function SettingPage() {
   const session = await auth();
 
