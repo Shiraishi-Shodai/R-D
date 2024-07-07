@@ -21,6 +21,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
+    // ユーザーがサインアップできるかどうかを制御する
+    async signIn({ user, account }) {
+      // OAuth認証は常に許可する
+      if (account?.provider !== "credentials") return true;
+
+      const existingUser = await getUserById(user.id!);
+      // メール認証なしでサインインできないようにする
+      if (!existingUser?.emailVerified) return false;
+
+      // 2段階認証チェック
+      return true;
+    },
     // クライアントサイドやサーバーサイドでセッションデータを取得する際に実行される
     // session関数では引数にjwt関数からリターンしたtokenを受け取る。token.subにはユーザの識別子などJWTの主体が格納される
     async session({ token, session }) {

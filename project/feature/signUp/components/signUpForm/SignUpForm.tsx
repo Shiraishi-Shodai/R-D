@@ -1,7 +1,5 @@
 "use client";
 
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { AuthFieldType, signUpType } from "../../../../types/auth";
 import { Button } from "@/app/components/elements/button";
@@ -12,6 +10,8 @@ import FormError from "@/app/components/elements/auth/FormError";
 import FormSuccess from "@/app/components/elements/auth/FormSuccess";
 import BackButton from "@/app/components/elements/auth/BackButton";
 import Social from "@/app/components/elements/auth/Social";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SignUpForm: React.FC = () => {
   const [error, setError] = useState<string | undefined>();
