@@ -9,7 +9,13 @@ export const publicRoutes = ["/", "/auth/newVerification"];
  * これらのルートはユーザーがログイン後/settingへとリダイレクトされる
  * @type {string[]}
  */
-export const authRoutes = ["/auth/signUp", "/auth/login", "/auth/error"];
+export const authRoutes = [
+  "/auth/signUp",
+  "/auth/login",
+  "/auth/error",
+  "/auth/reset",
+  "/auth/newPassword", // 一度アカウント情報を登録しているため、パブリックではなくauthRouteとする
+];
 
 /**
  * 認証用のapiプレフィックス

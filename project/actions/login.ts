@@ -29,7 +29,7 @@ export const login = async (values: loginType) => {
       existingUser.email
     );
     sendVerificationEmail(verificationToken.email, verificationToken.token);
-    return { success: "Confirmation email sent!" };
+    return { success: "メールを送信しました!" };
   }
 
   try {
@@ -42,11 +42,12 @@ export const login = async (values: loginType) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "credentialsエラー" };
+          return { error: "メールアドレスまたはパスワードまたは" };
         default:
-          return { error: "原因不明のエラー" };
+          return { error: "メールアドレスまたはパスワードまたは" };
       }
     }
+
     throw error;
   }
 

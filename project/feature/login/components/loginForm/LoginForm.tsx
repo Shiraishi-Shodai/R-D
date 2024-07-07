@@ -35,6 +35,7 @@ const LoginForm: React.FC = () => {
       login(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
+        console.log(data);
       });
     });
   };
@@ -62,10 +63,14 @@ const LoginForm: React.FC = () => {
           ))}
         </div>
 
+        <Button>
+          <a href="/auth/reset">パスワードを忘れた方はこちら</a>
+        </Button>
+
         <FormError message={error} />
         <FormSuccess message={success} />
         <Button className="w-full mt-6" type="submit" disabled={isPending}>
-          Sign up
+          ログイン
         </Button>
       </form>
       <Social />

@@ -1,19 +1,18 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { AuthFieldType, signUpType } from "../../../../types/auth";
-import { Button } from "@/app/components/elements/button";
-import FormField from "@/app/components/elements/auth/AuthField";
-import { signUpSchema } from "@/schema";
-import { signUp } from "@/actions/signUp";
-import FormError from "@/app/components/elements/auth/FormError";
-import FormSuccess from "@/app/components/elements/auth/FormSuccess";
-import BackButton from "@/app/components/elements/auth/BackButton";
-import Social from "@/app/components/elements/auth/Social";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
+import { AuthFieldType, resetType } from "../../../../types/auth";
+import BackButton from "@/app/components/elements/auth/BackButton";
+import FormError from "@/app/components/elements/auth/FormError";
+import FormSuccess from "@/app/components/elements/auth/FormSuccess";
+import { Button } from "@/app/components/elements/button";
+import FormField from "@/app/components/elements/auth/AuthField";
+import { resetSchema } from "@/schema";
+import { reset } from "@/actions/reset";
 
-const SignUpForm: React.FC = () => {
+const ResetForm: React.FC = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
@@ -23,16 +22,17 @@ const SignUpForm: React.FC = () => {
     handleSubmit,
     formState: { errors }, // バリデーションチェックに失敗したときに表示するエラーオブジェクト
     control,
-  } = useForm<signUpType>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<resetType>({
+    resolver: zodResolver(resetSchema),
   });
 
   // フォームのデータを受取ユーザーを作成
-  const onSubmit: SubmitHandler<signUpType> = async (values: signUpType) => {
+  const onSubmit: SubmitHandler<resetType> = async (values: resetType) => {
     setError("");
     setSuccess("");
+    console.log(values);
     startTransition(() => {
-      signUp(values).then((data) => {
+      reset(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -41,10 +41,7 @@ const SignUpForm: React.FC = () => {
 
   // FormFieldコンポーネントをマップで回すためにオブジェクトを用意
   const fieldObj: AuthFieldType = {
-    name: { placeholder: "John Doe", inputType: "text" },
     email: { placeholder: "exmaple@mail.com", inputType: "email" },
-    password: { placeholder: "******", inputType: "password" },
-    confirmPassword: { placeholder: "******", inputType: "password" },
   };
 
   return (
@@ -67,16 +64,12 @@ const SignUpForm: React.FC = () => {
         <FormError message={error} />
         <FormSuccess message={success} />
         <Button className="w-full mt-6" type="submit" disabled={isPending}>
-          Sign up
+          メールを送信
         </Button>
       </form>
-      <Social />
-      <BackButton
-        href="/auth/login"
-        message="すでにアカウントをお持ちの方はこちら"
-      />
+      <BackButton href="/auth/login" message="ログイン画面へ戻る" />
     </div>
   );
 };
 
-export default SignUpForm;
+export default ResetForm;

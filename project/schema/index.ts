@@ -17,10 +17,10 @@ export const baseSchema = z.object({
   confirmPassword: z
     .string()
     .min(1, { message: "確認用のパスワードを入力してください" }),
-  securityCode: z
-    .string({ message: "6桁のセキュリティコードを入力してください" })
-    .length(6)
-    .regex(/^\d{6}$/),
+  // securityCode: z
+  //   .string({ message: "6桁のセキュリティコードを入力してください" })
+  //   .length(6)
+  //   .regex(/^\d{6}$/),
 });
 
 // サインアップ画面のフォーム入力の際に使用するバリデーションチェックのルールを定義
@@ -46,15 +46,11 @@ export const loginSchema = baseSchema.pick({
   password: true,
 });
 
-export const passReset1Schema = baseSchema.pick({
+export const resetSchema = baseSchema.pick({
   email: true,
 });
 
-export const passReset2Schema = baseSchema.pick({
-  securityCode: true,
-});
-
-export const passReset3Schema = baseSchema
+export const newPasswordSchema = baseSchema
   .pick({
     password: true,
     confirmPassword: true,

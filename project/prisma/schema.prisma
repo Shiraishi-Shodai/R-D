@@ -51,7 +51,18 @@ model Account {
   @@map("accounts")
 }
 
+// アカウント登録、ログイン時に使用するトークンテーブル
 model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique //認証トークン（文字列型、一意）
+  expires DateTime //トークンの有効期限（日付と時刻型）
+
+  @@unique([email, token]) //email と token の組み合わせが一意であることを保証するインデックスを定義
+}
+
+// パスワード再設定時に使用するトークンテーブル
+model PasswordResetToken {
   id String @id @default(cuid())
   email String
   token String @unique //認証トークン（文字列型、一意）
