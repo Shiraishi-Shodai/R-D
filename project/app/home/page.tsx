@@ -1,29 +1,31 @@
 "use client";
 
-import Product from "@/feature/home/components/productList/product";
-import { ProductType } from "@/types/product";
 import React, { useEffect, useState } from "react";
+import { Product } from "@/feature/home/types/home";
+import PagiNation from "@/feature/home/components/pagiNation/PagiNation";
 
 const HomePage = () => {
-  const [binaryData, setBinaryData] = useState<BinaryData>();
+  const [productList, setProductList] = useState<Product[]>([]);
+  console.log(productList);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/home/productList");
-      const data: BinaryData = await response.json(); // Ensure this matches the expected format
-      setBinaryData(data);
+    const getProductList = async () => {
+      await fetch("/api/home")
+        .then((response) => response.json())
+        .then((productList) => setProductList(productList.data))
+        .catch((error) => console.log(error));
     };
-    fetchData(); // Call the async function
+
+    getProductList();
   }, []);
 
-  const data: ProductType = {
-    name: "カラフルTシャツ",
-    category: "Tシャツ",
-    price: 1000,
-    img: binaryData!,
-  };
   return (
     <div>
-      <Product data={data} />
+      {productList.length === 0 ? (
+        <p>loading...</p>
+      ) : (
+        <PagiNation productList={productList} />
+      )}
     </div>
   );
 };
