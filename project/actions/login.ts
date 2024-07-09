@@ -3,12 +3,10 @@ import { getUserByEmail } from "@/data/user";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { loginType } from "@/types/auth";
+import { SendEmailDto, loginType } from "@/types/auth";
 import { loginSchema } from "@/schema";
 import { generateVerificationToken } from "@/lib/token";
-import { sendVerificationEmail } from "@/lib/mail";
-import { getVerificationTokenByEmail } from "@/data/verificationToken";
-import { db } from "@/lib/db";
+import { getVerificationDto, sendEmail } from "@/lib/mail";
 
 export const login = async (values: loginType) => {
   const validationFields = loginSchema.safeParse(values);
@@ -28,7 +26,15 @@ export const login = async (values: loginType) => {
     const verificationToken = await generateVerificationToken(
       existingUser.email
     );
-    sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+    // サインアップ用の認証メール設定を生成
+    const verificationDto: SendEmailDto = getVerificationDto(
+      "サインイン用の認証メール",
+      verificationToken.email,
+      verificationToken.token
+    );
+
+    await sendEmail(verificationDto);
     return { success: "メールを送信しました!" };
   }
 
