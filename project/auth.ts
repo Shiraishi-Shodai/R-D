@@ -23,6 +23,38 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     // ユーザーがサインアップできるかどうかを制御する
     async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        const existingUser = await db.user.findUnique({
+          where: { email: user.email! },
+        });
+
+        // グーグル認証に使用したメアドがcredentialsで登録済みか？
+        if (existingUser) {
+          const existingGoogle = await db.account.findFirst({
+            where: { userId: existingUser.id },
+          });
+
+          // credentialsで登録済みのメアドがすでにaccountテーブルに存在するか？
+          if (!existingGoogle) {
+            // 既存のアカウントとグーグルアカウントをリンクする
+            await db.account.create({
+              data: {
+                userId: existingUser.id,
+                type: "bearer",
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+                refresh_token: account.refresh_token,
+                access_token: account.access_token,
+                expires_at: account.expires_at,
+                token_type: account.token_type,
+                scope: account.scope,
+                id_token: account.id_token,
+                session_state: account.session_state?.toString(),
+              },
+            });
+          }
+        }
+      }
       // OAuth認証は常に許可する
       if (account?.provider !== "credentials") return true;
 

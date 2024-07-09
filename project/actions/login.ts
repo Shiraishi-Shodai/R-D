@@ -35,7 +35,10 @@ export const login = async (values: loginType) => {
     );
 
     await sendEmail(verificationDto);
-    return { success: "メールを送信しました!" };
+    return {
+      success:
+        "認証リンクを再生成しました。メールを確認し、認証リンクをクリックしてください",
+    };
   }
 
   try {

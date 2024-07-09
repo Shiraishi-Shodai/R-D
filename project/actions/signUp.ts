@@ -41,5 +41,5 @@ export const signUp = async (values: signUpType) => {
   // 生成した認証トークンをメアドに送信
   await sendEmail(verificationDto);
 
-  return { success: "サインアップ成功" };
+  return { success: "入力されたメールアドレスに認証リンクを送信しました" };
 };
