@@ -42,9 +42,9 @@ export const login = async (values: loginType) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "メールアドレスまたはパスワードまたは" };
+          return { error: "メールアドレスまたはパスワードが正しくありません" };
         default:
-          return { error: "メールアドレスまたはパスワードまたは" };
+          return { error: "メールアドレスまたはパスワードが正しくありません" };
       }
     }
 

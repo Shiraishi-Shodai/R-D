@@ -5,7 +5,7 @@ import {
   resetSchema,
   signUpSchema,
 } from "@/schema/index";
-import { newPassword } from "@/actions/newPassword";
+import Mail from "nodemailer/lib/mailer";
 
 // サインアップ時にデータベースに新規登録するデータの型を定義
 export type UserType = {
@@ -22,4 +22,11 @@ export type newPasswordType = z.infer<typeof newPasswordSchema>;
 
 export type AuthFieldType = {
   [key: string]: { placeholder: string; inputType: string };
+};
+
+export type SendEmailDto = {
+  sender: Mail.Address;
+  recipients: Mail.Address[];
+  subject: string;
+  html: string;
 };

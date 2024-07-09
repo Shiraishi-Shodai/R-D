@@ -35,7 +35,7 @@ export const generatePasswordResetToken = async (email: string) => {
 
   // トークンがすでに存在していれば削除する
   if (existingToken) {
-    await db.verificationToken.delete({
+    await db.passwordResetToken.delete({
       where: { id: existingToken.id },
     });
   }

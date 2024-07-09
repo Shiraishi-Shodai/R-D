@@ -1,10 +1,10 @@
 "use server";
 import { getUserByEmail } from "@/data/user";
 import { db } from "@/lib/db";
-import { sendVerificationEmail } from "@/lib/mail";
+import { getVerificationDto, sendEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/token";
 import { signUpSchema } from "@/schema";
-import { signUpType } from "@/types/auth";
+import { SendEmailDto, signUpType } from "@/types/auth";
 import bcrypt from "bcryptjs";
 
 export const signUp = async (values: signUpType) => {
@@ -32,7 +32,18 @@ export const signUp = async (values: signUpType) => {
   // 生成した認証トークンインスタンスを作成し、データベースにデータを挿入
   const verificationToken = await generateVerificationToken(email);
   // 生成した認証トークンをメアドに送信
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  // Reset用
+  // await sendVerificationEmail(verificationToken.email, verificationToken.token);
+
+  // nodemailer用
+  // サインアップ用の認証メール設定を生成
+  const verificationDto: SendEmailDto = getVerificationDto(
+    "サインイン用の認証メール",
+    verificationToken.email,
+    verificationToken.token
+  );
+
+  await sendEmail(verificationDto);
 
   return { success: "サインアップ成功" };
 };
