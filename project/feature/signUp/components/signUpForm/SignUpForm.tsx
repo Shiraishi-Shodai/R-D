@@ -71,10 +71,7 @@ const SignUpForm: React.FC = () => {
         </Button>
       </form>
       <Social />
-      <BackButton
-        href="/auth/login"
-        message="すでにアカウントをお持ちの方はこちら"
-      />
+      <BackButton href="/auth/login" message="ログインはこちら" />
     </div>
   );
 };

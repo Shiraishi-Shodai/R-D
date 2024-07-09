@@ -48,10 +48,7 @@ const NewVerificationForm = () => {
         <FormSuccess message={success} />
         {!success && <FormError message={error} />}
       </div>
-      <BackButton
-        href="/auth/signIn"
-        message="すでにアカウントをお持ちの方はこちら"
-      />
+      <BackButton href="/auth/signIn" message="ログイン" />
     </div>
   );
 };
