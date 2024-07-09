@@ -31,11 +31,6 @@ export const signUp = async (values: signUpType) => {
 
   // 生成した認証トークンインスタンスを作成し、データベースにデータを挿入
   const verificationToken = await generateVerificationToken(email);
-  // 生成した認証トークンをメアドに送信
-  // Reset用
-  // await sendVerificationEmail(verificationToken.email, verificationToken.token);
-
-  // nodemailer用
   // サインアップ用の認証メール設定を生成
   const verificationDto: SendEmailDto = getVerificationDto(
     "サインイン用の認証メール",
@@ -43,6 +38,7 @@ export const signUp = async (values: signUpType) => {
     verificationToken.token
   );
 
+  // 生成した認証トークンをメアドに送信
   await sendEmail(verificationDto);
 
   return { success: "サインアップ成功" };

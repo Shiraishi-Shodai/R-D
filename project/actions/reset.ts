@@ -21,12 +21,6 @@ export const reset = async (values: resetType) => {
 
   const passwordResetToken = await generatePasswordResetToken(email);
 
-  //認証メールを送信
-
-  //Reset用
-  // sendPasswordResetEmail(passwordResetToken.email, passwordResetToken.token);
-
-  // nodemailer用
   // パスワードリセット用の認証メール設定を生成
   const resetPasswordDto: SendEmailDto = getResetPasswordDto(
     "パスワードリセット用の認証メール",
@@ -34,6 +28,7 @@ export const reset = async (values: resetType) => {
     passwordResetToken.token
   );
 
+  //認証メールを送信
   await sendEmail(resetPasswordDto);
 
   return { success: "パスワードリセットメールを送信しました" };
