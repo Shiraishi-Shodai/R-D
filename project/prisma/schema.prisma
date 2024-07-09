@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,25 +13,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model clothes_category {
-  clothes_category_id   Int                 @id @default(autoincrement())
-  clothes_category_name String              @db.VarChar(51)
-  // productattributes     productattributes[]
+enum UserRole {
+  ADMIN
+  USER
 }
 
-// model productattributes {
-//   product_attribute_id Int              @id(map: "product_attributes_pkey")
-//   product_id           Int
-//   clothes_category_id  Int
-//   clothes_category     clothes_category @relation(fields: [clothes_category_id], references: [clothes_category_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_clothes_category")
-//   products             products         @relation(fields: [product_id], references: [product_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_product_id")
-// }
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? 
+  image         String?
+  password String?
+  role     UserRole @default(USER)
+  accounts      Account[]
+ 
+  @@map("users")
+}
 
-model products {
-  product_id           Int                 @id @default(autoincrement())
-  product_image        Bytes
-  product_name         String              @db.VarChar(51)
-  product_price        Int
-  product_category_id  Int
-  category             clothes_category     @relation(fields: [product_category_id], references: [clothes_category_id])
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// アカウント登録、ログイン時に使用するトークンテーブル
+model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique //認証トークン（文字列型、一意）
+  expires DateTime //トークンの有効期限（日付と時刻型）
+
+  @@unique([email, token]) //email と token の組み合わせが一意であることを保証するインデックスを定義
+}
+
+// パスワード再設定時に使用するトークンテーブル
+model PasswordResetToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique //認証トークン（文字列型、一意）
+  expires DateTime //トークンの有効期限（日付と時刻型）
+
+  @@unique([email, token]) //email と token の組み合わせが一意であることを保証するインデックスを定義
 }
