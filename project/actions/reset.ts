@@ -23,7 +23,7 @@ export const reset = async (values: resetType) => {
 
   // パスワードリセット用の認証メール設定を生成
   const resetPasswordDto: SendEmailDto = getResetPasswordDto(
-    "パスワードリセット用の認証メール",
+    "パスワードリセット用メール",
     passwordResetToken.email,
     passwordResetToken.token
   );

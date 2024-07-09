@@ -33,5 +33,7 @@ export const newVerification = async (token: string) => {
   //   where: { id: existingToken.id },
   // });
 
-  return { success: "メール認証に成功しました" };
+  return {
+    success: "認証しました。ログインへお進みください",
+  };
 };
