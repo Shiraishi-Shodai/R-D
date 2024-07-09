@@ -6,7 +6,6 @@ import PagiNation from "@/feature/home/components/pagiNation/PagiNation";
 
 const HomePage = () => {
   const [productList, setProductList] = useState<Product[]>([]);
-  console.log(productList);
 
   useEffect(() => {
     const getProductList = async () => {

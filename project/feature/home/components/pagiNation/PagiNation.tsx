@@ -9,7 +9,6 @@ interface PagiNationProps {
 }
 
 const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
-  console.log(productList);
   const itemPerPage = 6;
   // 表示するページの最初の商品のインデックス
   const [itemOffset, setItemOffset] = useState(0);
@@ -26,8 +25,7 @@ const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
   //ページリンクがクリックされた時
   const handlePageClick = useCallback(
     (e: { selected: number }) => {
-      // const newOffset =
-      console.log(e.selected);
+      //表示するページの最初の商品のインデックスを更新
       const newOffset = (e.selected * itemPerPage) % productList.length;
       setItemOffset(newOffset);
     },
@@ -36,10 +34,7 @@ const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
 
   return (
     <div style={{ width: "100%", textAlign: "center" }}>
-      <ProductList
-        productList={productList}
-        currentProductList={currentProductList}
-      />
+      <ProductList currentProductList={currentProductList} />
 
       <div>
         <ReactPaginate pageCount={pageCount} onPageChange={handlePageClick} />
