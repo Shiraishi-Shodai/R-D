@@ -5,7 +5,8 @@ import { NextResponse } from "next/server";
 export const GET = async (req: NextApiRequest) => {
   try {
     const response = await fetch(
-      "https://jsonplaceholder.typicode.com/albums/1/photos"
+      "https://jsonplaceholder.typicode.com/albums/1/photos",
+      { cache: "force-cache" }
     );
 
     const data = await response.json();

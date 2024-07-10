@@ -2,7 +2,7 @@
 import React, { useCallback, useState } from "react";
 import { Product } from "@/feature/home/types/home";
 import ReactPaginate from "react-paginate";
-import ProductList from "../productList/productList";
+import ProductList from "../productList/ProductList";
 
 interface PagiNationProps {
   productList: Product[];

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Product } from "@/feature/home/types/home";
 import PagiNation from "@/feature/home/components/pagiNation/PagiNation";
+import { Oval } from "react-loader-spinner";
 
 const HomePage = () => {
   const [productList, setProductList] = useState<Product[]>([]);
@@ -21,7 +22,7 @@ const HomePage = () => {
   return (
     <div>
       {productList.length === 0 ? (
-        <p>loading...</p>
+        <Oval color="#00BFFF" height={80} width={80} />
       ) : (
         <PagiNation productList={productList} />
       )}
