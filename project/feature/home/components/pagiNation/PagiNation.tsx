@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Product } from "@/feature/home/types/home";
 import ReactPaginate from "react-paginate";
 import ProductList from "../productList/ProductList";
+import style from "./pagiNation.module.scss";
 
 interface PagiNationProps {
   productList: Product[];
@@ -33,7 +34,7 @@ const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
   );
 
   return (
-    <div style={{ width: "100%", textAlign: "center" }}>
+    <div className={style.paginationWrapper}>
       <ProductList currentProductList={currentProductList} />
 
       <div>
