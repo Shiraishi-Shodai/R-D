@@ -1,12 +1,12 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { Product } from "@/feature/home/types/home";
 import Image from "next/image";
 import { Oval } from "react-loader-spinner";
-import Link from "next/link";
+import { ProductType } from "../../types/home";
+import Product from "../product/product";
 
 interface ProductListProps {
-  currentProductList: Product[];
+  currentProductList: ProductType[];
 }
 
 const ProductList: React.FC<ProductListProps> = ({ currentProductList }) => {
@@ -14,22 +14,7 @@ const ProductList: React.FC<ProductListProps> = ({ currentProductList }) => {
     <div className="albumGridWrapper" style={{ display: "grid" }}>
       {currentProductList.map((product, key) =>
         product.id ? (
-          <Link
-            key={key}
-            href={`/productDetail/${product.id}?product=${JSON.stringify(
-              product
-            )}`}
-          >
-            <div>
-              <p>{product.title}</p>
-              <Image
-                src={product.url}
-                alt={product.title}
-                width={300}
-                height={300}
-              />
-            </div>
-          </Link>
+          <Product product={product} key={key} />
         ) : (
           <Oval color="#00BFFF" height={80} width={80} key={key} />
         )

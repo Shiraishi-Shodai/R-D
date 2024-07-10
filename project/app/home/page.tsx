@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Product } from "@/feature/home/types/home";
+import { ProductType } from "@/feature/home/types/home";
 import PagiNation from "@/feature/home/components/pagiNation/PagiNation";
 import { Oval } from "react-loader-spinner";
 
 const HomePage = () => {
-  const [productList, setProductList] = useState<Product[]>([]);
+  const [productList, setProductList] = useState<ProductType[]>([]);
 
   useEffect(() => {
     const getProductList = async () => {

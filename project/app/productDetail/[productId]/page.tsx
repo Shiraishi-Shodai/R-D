@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/feature/home/types/home";
+import { ProductType } from "@/feature/home/types/home";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React from "react";
@@ -15,7 +15,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const { productId } = params;
   const searchParams = useSearchParams();
   const product_str = searchParams.get("product");
-  const product: Product = JSON.parse(product_str!);
+  const product: ProductType = JSON.parse(product_str!);
 
   return (
     <div>
