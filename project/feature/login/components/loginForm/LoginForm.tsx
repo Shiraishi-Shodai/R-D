@@ -8,7 +8,6 @@ import { loginSchema } from "@/schema/index";
 import FormField from "@/app/components/elements/auth/AuthField";
 import FormError from "@/app/components/elements/auth/FormError";
 import FormSuccess from "@/app/components/elements/auth/FormSuccess";
-import { Button } from "@/app/components/elements/button";
 import Social from "@/app/components/elements/auth/Social";
 import BackButton from "@/app/components/elements/auth/BackButton";
 import { login } from "@/actions/login";
@@ -63,15 +62,15 @@ const LoginForm: React.FC = () => {
           ))}
         </div>
 
-        <Button>
+        <button>
           <a href="/auth/reset">パスワードを忘れた方はこちら</a>
-        </Button>
+        </button>
 
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button className="w-full mt-6" type="submit" disabled={isPending}>
+        <button className="w-full mt-6" type="submit" disabled={isPending}>
           ログイン
-        </Button>
+        </button>
       </form>
       <Social />
       <BackButton

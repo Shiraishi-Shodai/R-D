@@ -1,8 +1,13 @@
 /**
  * ログインしていなくてもアクセスできるパスの配列
- * @type {string[]}
+ * @type {RegExp[]}
  */
-export const publicRoutes = ["/", "/auth/newVerification"];
+export const publicRoutes: RegExp[] = [
+  /^\/$/, // ルートパス
+  /^\/home$/, // "/home" パス
+  /^\/productDetail\/.+$/, // 正規表現での "/productDetail/anything" パス
+  /^\/auth\/newVerification$/, // "/auth/newVerification" パス
+];
 
 /**
  * 認証に使用されるパスの配列
@@ -27,4 +32,4 @@ export const apiAuthPrefix = "/api/auth";
  * ログイン後にリダイレクトされるパス
  *@type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/home";

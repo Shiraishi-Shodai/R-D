@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Product } from "@/feature/home/types/home";
+import { ProductType } from "@/feature/home/types/home";
 import PagiNation from "@/feature/home/components/pagiNation/PagiNation";
 import { Oval } from "react-loader-spinner";
+import style from "@/app/home/home.module.scss";
 
 const HomePage = () => {
-  const [productList, setProductList] = useState<Product[]>([]);
+  const [productList, setProductList] = useState<ProductType[]>([]);
 
   useEffect(() => {
     const getProductList = async () => {
@@ -20,7 +21,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className={style.home}>
       {productList.length === 0 ? (
         <Oval color="#00BFFF" height={80} width={80} />
       ) : (

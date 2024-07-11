@@ -1,0 +1,34 @@
+$primary-color: #64ff00;
+
+// styles.scss
+
+.pagination {
+  display: flex;
+  justify-content: center; // ページネーションを中央寄せする場合
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+
+  li {
+    display: inline-block;
+    margin-right: 10px; // 各ページリンクの間隔を調整する場合
+    cursor: pointer;
+
+    a {
+      color: #333;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      text-decoration: none;
+
+      &.selected {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+      }
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
