@@ -3,7 +3,8 @@
 import { ProductType } from "@/feature/home/types/home";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Oval } from "react-loader-spinner";
 
 interface ProductDetailPageProps {
   params: {
@@ -13,13 +14,24 @@ interface ProductDetailPageProps {
 
 const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
   const { productId } = params;
-  const searchParams = useSearchParams();
-  const product_str = searchParams.get("product");
-  const product: ProductType = JSON.parse(product_str!);
+  const [product, setProduct] = useState<ProductType>();
+
+  useEffect(() => {
+    const getData = async (productId: number) => {
+      await fetch("/api/productDetail", {
+        method: "POST",
+        body: JSON.stringify({ productId: productId }),
+      })
+        .then((response) => response.json())
+        .then((data) => setProduct(data.message));
+    };
+
+    getData(productId);
+  }, []);
 
   return (
     <div>
-      {!product && <p>Loading...</p>}
+      {!product && <Oval color="#00BFFF" height={80} width={80} />}
       {product && (
         <div>
           <p>{product.title}</p>

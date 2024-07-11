@@ -1,17 +1,16 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { Oval } from "react-loader-spinner";
-import { ProductType } from "../../types/home";
-import Product from "../product/product";
-
+import { ProductType } from "@/feature/home/types/home";
+import Product from "@/feature/home/components/product/product";
+import style from "@/feature/home/components/productList/productList.module.scss";
 interface ProductListProps {
   currentProductList: ProductType[];
 }
 
 const ProductList: React.FC<ProductListProps> = ({ currentProductList }) => {
   return (
-    <div className="albumGridWrapper" style={{ display: "grid" }}>
+    <div className={style.paginationWrapper}>
       {currentProductList.map((product, key) =>
         product.id ? (
           <Product product={product} key={key} />

@@ -1,0 +1,10 @@
+.header {
+  background-color: red;
+  height: 10vh;
+
+  .items {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}

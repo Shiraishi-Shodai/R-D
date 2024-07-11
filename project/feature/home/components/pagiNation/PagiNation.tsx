@@ -10,13 +10,13 @@ interface PagiNationProps {
 }
 
 const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
-  const itemPerPage = 6;
+  const itemPerPage = 10;
   // 表示するページの最初の商品のインデックス
   const [itemOffset, setItemOffset] = useState(0);
   // 次のページの最初に表示する商品のインデックス
   const endOffset = itemOffset + itemPerPage;
   // 現在のページで表示する商品配列
-  const currentProductList: Product[] = productList.slice(
+  const currentProductList: ProductType[] = productList.slice(
     itemOffset,
     endOffset
   );
@@ -37,7 +37,7 @@ const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
     <div className={style.paginationWrapper}>
       <ProductList currentProductList={currentProductList} />
 
-      <div>
+      <div className={style.pagination}>
         <ReactPaginate pageCount={pageCount} onPageChange={handlePageClick} />
       </div>
     </div>
