@@ -1,0 +1,60 @@
+{
+  "商品1": {
+    "product_id": 1,
+    "product_name": "商品1",
+    "price": 1200,
+    "color": [
+      {"color_id": 1, "color_name": "ホワイト", "image": "/1/1_white.png"},
+      {"color_id": 2, "color_name": "ブラック", "image": "/1/1_black.png"},
+      {"color_id": 3, "color_name": "ピュアブルー", "image": "/1/1_pureBlue.png"}
+    ],
+    "size": [
+      {"size_id": 1, "size_name": "S"},
+      {"size_id": 2, "size_name": "M"},
+      {"size_id": 3, "size_name": "L"}
+    ],
+    "quantity": true
+  },
+  "商品2": {
+    "product_id": 2,
+    "product_name": "商品2",
+    "price": 1500,
+    "color": [
+      {"color_id": 1, "color_name": "グレイシャー・ホワイト", "image": "/2/2_glacierWhite.png"},
+      {"color_id": 2, "color_name": "ワインレッド", "image": "/2/2_wineRed.png"},
+      {"color_id": 3, "color_name": "ピュアブルー", "image": "/2/2_pureBlue.png"}
+    ],
+    "size": [
+      {"size_id": 1, "size_name": "M"},
+      {"size_id": 2, "size_name": "XL"}
+    ],
+    "quantity": true
+  },
+  "商品3": {
+    "product_id": 3,
+    "product_name": "商品3",
+    "price": 1800,
+    "color": [
+      {"color_id": 1, "color_name": "マグマレッド", "image": "/3/3_magmaRed.png"},
+      {"color_id": 2, "color_name": "ウェーブブルー", "image": "/3/3_waveBlue.png"}
+    ],
+    "size": [
+      {"size_id": 1, "size_name": "M"},
+      {"size_id": 2, "size_name": "L"},
+      {"size_id": 3, "size_name": "XL"}
+    ],
+    "quantity": true
+  },
+  "商品4": {
+    "product_id": 4,
+    "product_name": "商品4",
+    "price": 2000,
+    "color": [
+      {"color_id": 1, "color_name": "ピンク", "image": "/4/4_pink.png"}
+    ],
+    "size": [
+      {"size_id": 1, "size_name": "XXL"}
+    ],
+    "quantity": true
+  }
+}
