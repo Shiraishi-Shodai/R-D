@@ -12,13 +12,13 @@
 > [引用元](https://ja.legacy.reactjs.org/docs/jsx-in-depth.html#user-defined-components-must-be-capitalized)
 
 ```tsx
-import productDetail from "@/productDetail";      //*
+import productDetail from "@/productDetail";      // *
 import React from "react";
 
 function DetailPage() {
   return (
     <div>
-      <productDetail />     //**
+      <productDetail />     // **
     </div>
   );
 };
