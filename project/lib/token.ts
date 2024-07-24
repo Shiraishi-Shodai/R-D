@@ -11,12 +11,12 @@ export const generateVerificationToken = async (email: string) => {
 
   // トークンがすでに存在していれば削除する
   if (existingToken) {
-    await db.verificationToken.delete({
+    await db.verification_token.delete({
       where: { id: existingToken.id },
     });
   }
 
-  const verificationToken = await db.verificationToken.create({
+  const verificationToken = await db.verification_token.create({
     data: {
       email,
       token,
@@ -35,12 +35,12 @@ export const generatePasswordResetToken = async (email: string) => {
 
   // トークンがすでに存在していれば削除する
   if (existingToken) {
-    await db.passwordResetToken.delete({
+    await db.password_reset_token.delete({
       where: { id: existingToken.id },
     });
   }
 
-  const passwordResetToken = await db.passwordResetToken.create({
+  const passwordResetToken = await db.password_reset_token.create({
     data: {
       email,
       token,
