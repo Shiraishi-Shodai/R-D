@@ -90,7 +90,6 @@ model passwordResetToken {
 
   @@unique([email, token], map: "uni_passwor_reset_email_token")
   @@map("password_reset_token")
-
 }
 
 model product {
