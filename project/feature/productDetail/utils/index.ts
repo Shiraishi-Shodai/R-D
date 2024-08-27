@@ -1,8 +1,10 @@
+"use server"
 // コンポーネントに書くと鬱陶しい関数をここに書く
-import productData from '@/product.json';
+import { db } from '@/lib/db';
 
-export const getProductById = (id: number) => {
+export const getProductById = async(id: number) => {
   // 指定されたIDに一致する製品を見つける
-  const product = Object.values(productData).find((key) => key.product_id === Number(id));
+  const a = "1"
+  const product = await db.$queryRaw`SELECT * FROM view_products WHERE product_id = ${a}`;
   return product;
 };

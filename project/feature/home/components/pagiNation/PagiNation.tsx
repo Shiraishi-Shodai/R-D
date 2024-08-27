@@ -1,12 +1,12 @@
 "use client";
 import React, { useCallback, useState } from "react";
-import { ProductType } from "@/feature/home/types/home";
 import ReactPaginate from "react-paginate";
 import ProductList from "../productList/ProductList";
 import style from "./pagiNation.module.scss";
+import { Product } from "@/lib/product";
 
 interface PagiNationProps {
-  productList: ProductType[];
+  productList: Product[];
 }
 
 const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
@@ -16,7 +16,7 @@ const PagiNation: React.FC<PagiNationProps> = ({ productList }) => {
   // 次のページの最初に表示する商品のインデックス
   const endOffset = itemOffset + itemPerPage;
   // 現在のページで表示する商品配列
-  const currentProductList: ProductType[] = productList.slice(
+  const currentProductList: Product[] = productList.slice(
     itemOffset,
     endOffset
   );
