@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  name          String    @db.VarChar(30)
+  email         String    @unique @db.VarChar(319)
+  emailVerified DateTime? @db.Timestamp(6)
+  image         String?   @db.VarChar
+  password      String?   @db.VarChar(72)
+  role          UserRole  @default(USER)
+  address       String?   @db.VarChar(20)
+  credit_number String?   @db.VarChar(72)
+  postal_code   String?   @db.VarChar(7)
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  accounts      Account[]
+  cart          cart[]
+  orders        orders[]
+
+  @@map("users")
+}
+
+model Account {
+  type              String  @db.VarChar
+  provider          String  @db.VarChar
+  providerAccountId String  @map("provider_account_id") @db.VarChar
+  refresh_token     String? @db.VarChar
+  access_token      String? @db.VarChar
+  expires_at        Int?
+  token_type        String? @db.VarChar
+  scope             String?
+  id_token          String?
+  session_state     String? @db.VarChar
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String  @map("user_id") @db.Uuid
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model cart {
+  product_detail_id Int
+  user_id           String         @db.Uuid
+  valume            Int
+  product_detail    product_detail @relation(fields: [product_detail_id], references: [product_detail_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_id")
+  users             User           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+
+  @@id([product_detail_id, user_id])
+}
+
+model category {
+  category_id   Int       @id @default(autoincrement())
+  category_name String    @unique @db.VarChar(10)
+  product       product[]
+}
+
+model order_detail {
+  order_id          Int
+  product_detail_id Int
+  price             Int
+  valume            Int
+  orders            orders         @relation(fields: [order_id], references: [order_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_order_id")
+  product_detail    product_detail @relation(fields: [product_detail_id], references: [product_detail_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_detail_id")
+
+  @@id([order_id, product_detail_id])
+}
+
+model orders {
+  order_id             Int            @id @default(autoincrement())
+  user_id              String         @db.Uuid
+  order_date           DateTime       @default(dbgenerated("CURRENT_DATE")) @db.Date
+  delivery_destination String         @db.VarChar(20)
+  postal_code          String         @db.VarChar(7)
+  credit_number        String         @db.VarChar(72)
+  order_detail         order_detail[]
+  users                User           @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user_id")
+}
+
+model passwordResetToken {
+  id      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email   String   @unique @db.VarChar(319)
+  token   String   @unique
+  expires DateTime @db.Timestamp(6)
+
+  @@unique([email, token], map: "uni_passwor_reset_email_token")
+  @@map("password_reset_token")
+}
+
+model product {
+  product_id     Int              @id @default(autoincrement())
+  category_id    Int
+  product_name   String           @db.VarChar(50)
+  price          Int
+  target         Int
+  add_date       DateTime         @default(dbgenerated("CURRENT_DATE")) @db.Date
+  category       category         @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_category_id")
+  product_detail product_detail[]
+  product_img    product_img[]
+}
+
+model product_color {
+  color_id       Int              @id @default(autoincrement())
+  color_name     String           @unique @db.VarChar(10)
+  product_detail product_detail[]
+  product_img    product_img[]
+}
+
+model product_detail {
+  product_detail_id Int            @id @default(autoincrement())
+  product_id        Int
+  color_id          Int
+  size_id           Int
+  stock             Int
+  cart              cart[]
+  order_detail      order_detail[]
+  product_color     product_color  @relation(fields: [color_id], references: [color_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_color_id")
+  product           product        @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_id")
+  product_size      product_size   @relation(fields: [size_id], references: [size_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_size_id")
+}
+
+model product_img {
+  product_id    Int
+  color_id      Int
+  img_path      String        @unique @db.VarChar(254)
+  product_color product_color @relation(fields: [color_id], references: [color_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_color_id")
+  product       product       @relation(fields: [product_id], references: [product_id], onDelete: NoAction, onUpdate: NoAction, map: "fk_product_id")
+
+  @@id([product_id, color_id])
+}
+
+model product_size {
+  size_id        Int              @id @default(autoincrement())
+  size_name      String           @unique @db.VarChar(10)
+  product_detail product_detail[]
+}
+
+model verificationToken {
+  id      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email   String   @unique @db.VarChar(319)
+  token   String   @unique
+  expires DateTime @db.Timestamp(6)
+
+  @@unique([email, token], map: "uni_verification_email_token")
+  @@map("verification_token")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
